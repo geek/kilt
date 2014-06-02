@@ -69,6 +69,29 @@ describe('Kilt', function () {
         source2.emit('test', 1, 2, 3);
     });
 
+    it('combines multiple sources in constructor in multiple arguments', function (done) {
+
+        var source1 = new Events.EventEmitter();
+        var source2 = new Events.EventEmitter();
+
+        var kilt = new Kilt(source1, [source2]);
+
+        var counter = 0;
+        kilt.on('test', function (a, b, c) {
+
+            expect(a).to.equal(1);
+            expect(b).to.equal(2);
+            expect(c).to.equal(3);
+
+            if (++counter === 2) {
+                done();
+            }
+        });
+
+        source1.emit('test', 1, 2, 3);
+        source2.emit('test', 1, 2, 3);
+    });
+
     it('combines multiple sources in constructor and after', function (done) {
 
         var source1 = new Events.EventEmitter();
