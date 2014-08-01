@@ -5,4 +5,4 @@ Combines multiple event emitters into a single emitter.
 
 [![Build Status](https://secure.travis-ci.org/spumko/kilt.png)](http://travis-ci.org/spumko/kilt)
 
-**Lead Maintainer** | [hueniverse](https://github.com/hueniverse)
+**Lead Maintainer** - [hueniverse](https://github.com/hueniverse)
