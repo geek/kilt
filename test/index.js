@@ -13,7 +13,6 @@ var internals = {};
 // Test shortcuts
 
 var expect = Lab.expect;
-var describe = Lab.experiment;
 var it = Lab.test;
 
 
