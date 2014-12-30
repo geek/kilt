@@ -1,5 +1,6 @@
 // Load modules
 
+var Code = require('code');
 var Events = require('events');
 var Lab = require('lab');
 var Kilt = require('..');
@@ -12,8 +13,9 @@ var internals = {};
 
 // Test shortcuts
 
-var expect = Lab.expect;
-var it = Lab.test;
+var lab = exports.lab = Lab.script();
+var expect = Code.expect;
+var it = lab.it;
 
 
 it('combines multiple sources', function (done) {
