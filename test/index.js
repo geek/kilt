@@ -1,34 +1,36 @@
+'use strict';
+
 // Load modules
 
-var Code = require('code');
-var Events = require('events');
-var Lab = require('lab');
-var Kilt = require('..');
+const Code = require('code');
+const Events = require('events');
+const Lab = require('lab');
+const Kilt = require('..');
 
 
 // Declare internals
 
-var internals = {};
+const internals = {};
 
 
 // Test shortcuts
 
-var lab = exports.lab = Lab.script();
-var expect = Code.expect;
-var it = lab.it;
+const lab = exports.lab = Lab.script();
+const expect = Code.expect;
+const it = lab.it;
 
 
-it('combines multiple sources', function (done) {
+it('combines multiple sources', (done) => {
 
-    var source1 = new Events.EventEmitter();
-    var source2 = new Events.EventEmitter();
+    const source1 = new Events.EventEmitter();
+    const source2 = new Events.EventEmitter();
 
-    var kilt = new Kilt();
+    const kilt = new Kilt();
     kilt.addEmitter(source1);
     kilt.addEmitter(source2);
 
-    var counter = 0;
-    kilt.on('test', function (a, b, c) {
+    let counter = 0;
+    kilt.on('test', (a, b, c) => {
 
         expect(a).to.equal(1);
         expect(b).to.equal(2);
@@ -43,38 +45,15 @@ it('combines multiple sources', function (done) {
     source2.emit('test', 1, 2, 3);
 });
 
-it('combines multiple sources in constructor', function (done) {
+it('combines multiple sources in constructor', (done) => {
 
-    var source1 = new Events.EventEmitter();
-    var source2 = new Events.EventEmitter();
+    const source1 = new Events.EventEmitter();
+    const source2 = new Events.EventEmitter();
 
-    var kilt = new Kilt([source1, source2]);
+    const kilt = new Kilt([source1, source2]);
 
-    var counter = 0;
-    kilt.on('test', function (a, b, c) {
-
-        expect(a).to.equal(1);
-        expect(b).to.equal(2);
-        expect(c).to.equal(3);
-
-        if (++counter === 2) {
-            done();
-        }
-    });
-
-    source1.emit('test', 1, 2, 3);
-    source2.emit('test', 1, 2, 3);
-});
-
-it('combines multiple sources in constructor in multiple arguments', function (done) {
-
-    var source1 = new Events.EventEmitter();
-    var source2 = new Events.EventEmitter();
-
-    var kilt = new Kilt(source1, [source2]);
-
-    var counter = 0;
-    kilt.on('test', function (a, b, c) {
+    let counter = 0;
+    kilt.on('test', (a, b, c) => {
 
         expect(a).to.equal(1);
         expect(b).to.equal(2);
@@ -89,16 +68,39 @@ it('combines multiple sources in constructor in multiple arguments', function (d
     source2.emit('test', 1, 2, 3);
 });
 
-it('combines multiple sources in constructor and after', function (done) {
+it('combines multiple sources in constructor in multiple arguments', (done) => {
 
-    var source1 = new Events.EventEmitter();
-    var source2 = new Events.EventEmitter();
+    const source1 = new Events.EventEmitter();
+    const source2 = new Events.EventEmitter();
 
-    var kilt = new Kilt(source1);
+    const kilt = new Kilt(source1, [source2]);
+
+    let counter = 0;
+    kilt.on('test', (a, b, c) => {
+
+        expect(a).to.equal(1);
+        expect(b).to.equal(2);
+        expect(c).to.equal(3);
+
+        if (++counter === 2) {
+            done();
+        }
+    });
+
+    source1.emit('test', 1, 2, 3);
+    source2.emit('test', 1, 2, 3);
+});
+
+it('combines multiple sources in constructor and after', (done) => {
+
+    const source1 = new Events.EventEmitter();
+    const source2 = new Events.EventEmitter();
+
+    const kilt = new Kilt(source1);
     kilt.addEmitter(source2);
 
-    var counter = 0;
-    kilt.on('test', function (a, b, c) {
+    let counter = 0;
+    kilt.on('test', (a, b, c) => {
 
         expect(a).to.equal(1);
         expect(b).to.equal(2);
@@ -113,17 +115,17 @@ it('combines multiple sources in constructor and after', function (done) {
     source2.emit('test', 1, 2, 3);
 });
 
-it('combines multiple sources with own emit', function (done) {
+it('combines multiple sources with own emit', (done) => {
 
-    var source1 = new Events.EventEmitter();
-    var source2 = new Events.EventEmitter();
+    const source1 = new Events.EventEmitter();
+    const source2 = new Events.EventEmitter();
 
-    var kilt = new Kilt();
+    const kilt = new Kilt();
     kilt.addEmitter(source1);
     kilt.addEmitter(source2);
 
-    var counter = 0;
-    kilt.on('test', function (a, b, c) {
+    let counter = 0;
+    kilt.on('test', (a, b, c) => {
 
         expect(a).to.equal(1);
         expect(b).to.equal(2);
@@ -139,15 +141,15 @@ it('combines multiple sources with own emit', function (done) {
     source2.emit('test', 1, 2, 3);
 });
 
-it('adds sources after listeners', function (done) {
+it('adds sources after listeners', (done) => {
 
-    var source1 = new Events.EventEmitter();
-    var source2 = new Events.EventEmitter();
+    const source1 = new Events.EventEmitter();
+    const source2 = new Events.EventEmitter();
 
-    var kilt = new Kilt();
+    const kilt = new Kilt();
 
-    var counter = 0;
-    kilt.on('test', function (a, b, c) {
+    let counter = 0;
+    kilt.on('test', (a, b, c) => {
 
         expect(a).to.equal(1);
         expect(b).to.equal(2);
@@ -165,20 +167,20 @@ it('adds sources after listeners', function (done) {
     source2.emit('test', 1, 2, 3);
 });
 
-it('subscribed multiple times', function (done) {
+it('subscribed multiple times', (done) => {
 
-    var source1 = new Events.EventEmitter();
-    var source2 = new Events.EventEmitter();
+    const source1 = new Events.EventEmitter();
+    const source2 = new Events.EventEmitter();
 
-    var kilt = new Kilt();
+    const kilt = new Kilt();
 
-    var counter = 0;
-    kilt.on('test', function () {
+    let counter = 0;
+    kilt.on('test', () => {
 
         ++counter;
     });
 
-    kilt.on('test', function () {
+    kilt.on('test', () => {
 
         counter = counter * 4;
     });
@@ -193,17 +195,17 @@ it('subscribed multiple times', function (done) {
     done();
 });
 
-it('removes listener after once', function (done) {
+it('removes listener after once', (done) => {
 
-    var source1 = new Events.EventEmitter();
-    var source2 = new Events.EventEmitter();
+    const source1 = new Events.EventEmitter();
+    const source2 = new Events.EventEmitter();
 
-    var kilt = new Kilt();
+    const kilt = new Kilt();
     kilt.addEmitter(source1);
     kilt.addEmitter(source2);
 
-    var counter = 0;
-    kilt.once('test', function () {
+    let counter = 0;
+    kilt.once('test', () => {
 
         ++counter;
     });
@@ -224,17 +226,17 @@ it('removes listener after once', function (done) {
     done();
 });
 
-it('removes listener', function (done) {
+it('removes listener', (done) => {
 
-    var source1 = new Events.EventEmitter();
-    var source2 = new Events.EventEmitter();
+    const source1 = new Events.EventEmitter();
+    const source2 = new Events.EventEmitter();
 
-    var kilt = new Kilt();
+    const kilt = new Kilt();
     kilt.addEmitter(source1);
     kilt.addEmitter(source2);
 
-    var counter = 0;
-    var onTest = function () {
+    let counter = 0;
+    const onTest = () => {
 
         ++counter;
     };
@@ -249,17 +251,17 @@ it('removes listener', function (done) {
     done();
 });
 
-it('removes all listeners of given type', function (done) {
+it('removes all listeners of given type', (done) => {
 
-    var source1 = new Events.EventEmitter();
-    var source2 = new Events.EventEmitter();
+    const source1 = new Events.EventEmitter();
+    const source2 = new Events.EventEmitter();
 
-    var kilt = new Kilt();
+    const kilt = new Kilt();
     kilt.addEmitter(source1);
     kilt.addEmitter(source2);
 
-    var counter = 0;
-    var onTest = function () {
+    let counter = 0;
+    const onTest = () => {
 
         ++counter;
     };
@@ -283,17 +285,17 @@ it('removes all listeners of given type', function (done) {
     done();
 });
 
-it('removes all listeners', function (done) {
+it('removes all listeners', (done) => {
 
-    var source1 = new Events.EventEmitter();
-    var source2 = new Events.EventEmitter();
+    const source1 = new Events.EventEmitter();
+    const source2 = new Events.EventEmitter();
 
-    var kilt = new Kilt();
+    const kilt = new Kilt();
     kilt.addEmitter(source1);
     kilt.addEmitter(source2);
 
-    var counter = 0;
-    var onTest = function () {
+    let counter = 0;
+    const onTest = () => {
 
         ++counter;
     };
@@ -317,17 +319,17 @@ it('removes all listeners', function (done) {
     done();
 });
 
-it('removes all listeners of an unknown type', function (done) {
+it('removes all listeners of an unknown type', (done) => {
 
-    var source1 = new Events.EventEmitter();
-    var source2 = new Events.EventEmitter();
+    const source1 = new Events.EventEmitter();
+    const source2 = new Events.EventEmitter();
 
-    var kilt = new Kilt();
+    const kilt = new Kilt();
     kilt.addEmitter(source1);
     kilt.addEmitter(source2);
 
-    var counter = 0;
-    var onTest = function () {
+    let counter = 0;
+    const onTest = () => {
 
         ++counter;
     };
